@@ -1,0 +1,435 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins:400,500,700');
+
+html, body{
+  height: 100%;
+  width: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: #222;
+}
+/*------TOP RIGHT BAR _____*/
+
+
+
+
+/*---------- Start Norm -------*/
+.navbar {
+  padding: .2rem;
+}
+.navbar {
+  color: #ffffff
+}
+.navbar-nav li {
+  padding-right: 20px;
+}
+.nav-link {
+  font-size: .9em !important;
+}
+.carousel-inner img {
+  width: 100%;
+  height: 100%
+}
+.carousel-caption{
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.carousel-caption h1 {
+  font-size: 500%;
+  text-transform: uppercase;
+  text-shadow: 1px 1px 15px #000;
+}
+.carousel-caption h3 {
+  font-size: 200%;
+  font-weight: 500%;
+  text-shadow: 1px 1px 10px #000;
+  padding-bottom: 1rem;
+}
+.btn-primary {
+  background-color: #818385;
+  border: 1px solid #818385;
+}
+.btn-primary:hover {
+  background-color: #ec2028;
+  border: 1px solid #ec2028;
+}
+.jumbotron {
+  padding: 1rem;
+  border-radius: 0;
+}
+.padding {
+  padding-bottom: 1rem;
+  padding-top: 1rem;
+}
+.welcome {
+  margin: 0 auto;
+  padding-top: 2rem;
+}
+.welcome hr {
+  border-top: 2px solid #b4b4b4;
+  width: 95%;
+  margin-top: .3rem;
+  margin-bottom: 1rem;
+}
+.fa-microchip {
+  color: #b4b4b4;
+}
+.fa-arrow-alt-circle-up {
+  color: #b4b4b4;
+}
+.fa-microchip, .fa-arrow-alt-circle-up {
+  font-size: 4em;
+  margin: 1rem;
+}
+.fun {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+.gif {
+  max-width: 100%;
+}
+.social a {
+  font-size: 4.5em;
+  padding: 3rem;
+}
+.fa-facebook {
+  color: #3f3f3f;
+}
+.fa-google-plus-g {
+  color: #3f3f3f;
+}
+.fa-instagram {
+  color: #3f3f3f;
+}
+.fa-youtube {
+  color: #3f3f3f;
+}
+.fa-facebook:hover,
+.fa-google-plus-g:hover,
+.fa-instagram:hover,
+.fa-youtube:hover {
+  color: #d5d5d5;
+}
+footer {
+  background-color: #3f3f3f;
+  color: #d5d5d5;
+  padding-top: 2rem;
+
+/*-----HOVER_____*/
+}
+.image1:hover {
+  opacity: .7;
+}
+
+/*--------FAB------*/
+
+.fab-container {
+    position: fixed;
+    bottom: 50px;
+    right: 50px;
+    z-index: 999;
+    cursor: pointer;
+}
+.fab-icon-holder {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+    background: #b80b4b;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+}
+.fab-icon-holder:hover{
+  opacity: 0.8
+}
+.fa-home{
+    position: fixed;
+    bottom: 66px;
+    right: 66px;
+    z-index: 999;
+    cursor: pointer;
+    color: #ffffff;
+}
+.fa-phone{
+    position: fixed;
+    bottom: 67px;
+    right: 67px;
+    z-index: 999;
+    cursor: pointer;
+    color: #ffffff;
+}
+.img-desk {
+      box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      border-radius: 50px 50px 50px 50px;
+}
+.img-laser-cut {
+        box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+      border-radius: 50px 50px 50px 50px;
+}
+.img-2 {
+      box-shadow: 0 11px 19px rgba(0,0,0,0.2);
+      border-radius: 25px 25px 25px 25px;
+      margin: 10px auto 20px;
+      display: block;
+}
+
+.img-3 {
+      box-shadow: 0 11px 19px rgba(0,0,0,0.2);
+      border-radius: 25px 25px 25px 25px;
+      margin: 10px auto 20px;
+      display: block;
+}
+  /*-------Card Style ----*/
+
+
+.card1 {
+  border-radius: 40px;
+  border-color: rgba(0, 0, 0, 0);
+  box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.1)
+}
+.card-img-top { border-radius: 40px 40px 0px 0px; }
+
+/*---Media Queries --*/
+
+
+@media (min-width: 500px) {
+.img-3 {
+	background-image: url(img/background-long-amx-6002D-opt2-Small.jpg);
+}
+}
+
+
+@media (max-width: 2400px) {
+  .social a {
+    font-size: 2em;
+    padding: .7rem;
+  }
+}
+@media (max-width: 992px) {
+  .social a {
+    font-size: 2em;
+    padding: .7rem;
+  }
+}
+@media (max-width: 917px) {
+  .nav-link {
+    font-size: .7em !important;
+    word-spacing: .02px;
+  }
+}
+@media (max-width: 768px) {
+  .carousel-caption {
+    top: 45%;
+  }
+  .carousel-caption h1 {
+    font-size: 350%;
+  }
+  .carousel-caption h3 {
+    font-size: 140%;
+    font-weight: 400%;
+    padding-bottom: .2rem;
+  }
+  .carousel-caption .btn {
+    font-size: 95%;
+    padding: 8px 14px;
+  }
+  .display-4 {
+    font-size: 200%;
+  }
+  .social a {
+    font-size: 2em;
+    padding: .7rem;
+  }
+}
+@media (max-width: 576px) {
+  .carousel-caption {
+    top: 30%;
+  }
+  .carousel-caption h1 {
+    font-size: 200%;
+  }
+  .carousel-caption h3 {
+    font-size: 70
+  }
+  .carousel-caption .btn {
+    font-size: 90%;
+    padding: 4px 8px;
+  }
+  .carousel-indicators {
+    display: none;
+  }
+  .display-4 {
+    font-size: 160%;
+  }
+  .lead {
+    font-size: 100%;
+  }
+  .social a {
+    font-size: 2em;
+    padding: .7rem;
+  }
+}
+
+/*---slider -----*/
+
+
+/* Not sure what this was here for - Carlo
+{
+  box-sizing: content-box;
+}
+*/
+
+/* Position the image container (needed to position the left and right arrows) */
+.container-fluid {
+  position: all;
+}
+
+/* Hide the images by default */
+.mySlides {
+  display: none;
+}
+
+/* Add a pointer when hovering over the thumbnail images */
+.cursor {
+  cursor: pointer;
+}
+
+/* Next & previous buttons */
+.prev,
+.next {
+  cursor: pointer;
+  position: absolute;
+  top: 40%;
+  width: auto;
+  padding: 16px;
+  margin-top: -50px;
+  color: white;
+  font-weight: bold;
+  font-size: 20px;
+  border-radius: 0 0px 0px 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Position the "next button" to the right */
+.next {
+  right: 0;
+  border-radius: 20px 0 0 20px;
+}
+.prev {
+  left: 0;
+  border-radius: 0px 20px 20px 0px;
+}
+
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover,
+.next:hover {
+  background-color: rgba(100, 0, 0, .8);
+}
+
+/* Number text (1/3 etc) */
+.numbertext {
+  color: #f2f2f2;
+  font-size: 12px;
+  padding: 8px 12px;
+  position: absolute;
+  top: 0;
+}
+
+/* Container for image text */
+.caption-container {
+  text-align: center;
+  background-color: #222;
+  padding: 2px 16px;
+  color: white;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Six columns side by side */
+.column {
+  float: 100%;
+  width: 16.44%;
+}
+
+/* Add a transparency effect for thumnbail images */
+.demo {
+  opacity: 0.6;
+}
+
+.active,
+.demo:hover {
+  opacity: 1;
+}
+
+/*---Firefox Bug Fix --*/
+.carousel-item {
+  transition: -webkit-transform 0.5s ease;
+  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, -webkit-transform 0.5s ease;
+  -webkit-backface-visibility: visible;
+  backface-visibility: visible;
+}
+/*--- Fixed Background Image --*/
+figure {
+  position: relative;
+  width: 100%;
+  height: 40%;
+  margin: 0!important;
+}
+.fixed-wrap {
+  clip: rect(0, auto, auto, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+#fixed {
+  background-image: url('img/mac.png');
+  position: fixed;
+  display: block;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center center;
+  -webkit-transform: translateZ(0);
+          transform: translateZ(0);
+  will-change: transform;
+}
+/*--- Bootstrap Padding Fix --*/
+[class*="col-"] {
+    padding: 1rem;
+}
+
+
+
+
+
+/*
+Extra small (xs) devices (portrait phones, less than 576px)
+No media query since this is the default in Bootstrap
+
+Small (sm) devices (landscape phones, 576px and up)
+@media (min-width: 576px) { ... }
+
+Medium (md) devices (tablets, 768px and up)
+@media (min-width: 768px) { ... }
+
+Large (lg) devices (desktops, 992px and up)
+@media (min-width: 992px) { ... }
+
+Extra (xl) large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { ... }
+*/
+
+
+
+
+
+
+
+

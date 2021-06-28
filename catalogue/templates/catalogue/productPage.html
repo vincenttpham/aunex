@@ -1,0 +1,121 @@
+{% extends "main/layout.html" %}
+
+{% load static %}
+
+{% block title %}Aunex Staff{% endblock %}
+
+{% block body %}
+
+<!--- Image Slider -->
+<!-----FAB--->
+<a href="{% url 'index' %}">
+    <div class="fab-container">
+        <div class="fab-icon-holder">
+            <i class="fas fa-home"></i>
+        </a>
+    </div>
+    </div>
+    
+    
+<!--- Slider -->
+
+<div class="container-fluid padding">
+    <div class="row welcome text-center">
+        <div class="col-12">
+            <div class="col-12"></div>
+            
+            <h1> {{ product.name }} </h1>
+            <h5> {{ product.summary }}</h5>
+
+            <!-- Container for the image gallery -->
+            <div class="container">
+
+                {% for image in product.gallery.all %}
+
+                    <div class="mySlides">
+                        <img src= {{ image.image.url }} style="width:100%">
+                    </div>
+
+                {% endfor %}
+
+            </div>
+                
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+
+            <div class="row">
+
+                <div class="column">
+                    <img>
+                </div>
+
+                {% for image in product.gallery.all %}
+
+                    <div class="column">
+                        <img class="demo cursor" src={{ image.image.url }} style="width:100%" onclick="currentSlide( {{ forloop.counter }} )" alt="Three Quarters">
+                    </div>
+
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) {slideIndex = 1}
+            if (n < 1) {slideIndex = slides.length}
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex-1].style.display = "block";
+            dots[slideIndex-1].className += " active";
+            captionText.innerHTML = dots[slideIndex-1].alt;
+        }
+    </script>
+    
+    <!--- TECH SPECS -->
+
+    <div class="container-fluid padding">
+        {% if product.specSheet %}
+            <img src= {{ product.specSheet.image.url }} alt="centered image" class="img-fluid img-2 img-align-center">
+        {% endif %}
+        <div class="carousel-caption">
+        <h1 class="display-2"></h1>
+        <h3></h3>
+        </div>
+    </div>
+
+</div>  
+
+<div class="row welcome text-center">
+    <div class="col-12">
+        <p class="lead">
+            {% if product.specSheet %}
+                <a style="color:#c7c7c7;" href= {{ product.file.file.url }} target="_blank">DOWNLOAD MANUAL</p> </a>         
+            {% endif %}
+            <div class="col-12"></div>
+    </div>
+    </p>
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+{% load static %}
+
+<head>
+  <title>Aunex Dealer Locator</title>
+  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+  <meta charset="utf-8">
+  <!-- Force open Links -->
+  <base target="_blank" rel="noreferrer noopener">
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200&family=Quicksand:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'main/aunexdealerlocator.css' %}">
+  <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places,geometry&key=AIzaSyC0uC2V-60qNc3TeAyTtemqebljrdni97A"></script>
+  <script defer src="{% static 'main/aunexdealerlocator.js' %}"></script>
+</head>
+
+<body>
+  
+  <!-- Main Body of the Page -->
+  <div id="map-search-bar">
+    <input id="searchLocation" class="map-side-input" type="text">
+    <div style="display:inline-block">
+      <input id="distance" type="number" class="map-side-input" size="20%" min="5" max="200" value="25" onfocusout=clampValue(this)>
+      <span style="margin-right:8px">mi</span>
+    </div>
+    <br>
+    <input id="findDealers" type=button class="btn btn-primary" onclick="getNearbyDealers()" value="Find Dealers">
+    <input id="locateMe" type=button class="btn btn-info" onclick="getLocation()" value="Locate Me">
+  </div>
+
+  <!-- Map Display -->
+  <div style="height:100%">
+    <!-- Side Panel -->
+    <div style="display: none;" id="map-side-panel">
+      <div id="location-info">Select a dealer location for information.</div>
+    </div>
+
+    <!-- Map appears here -->
+    <div id="map-canvas"></div>
+  </div>
+
+
+</body>
+
+</html>

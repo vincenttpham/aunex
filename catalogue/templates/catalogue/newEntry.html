@@ -1,0 +1,247 @@
+{% extends "main/layout.html" %}
+
+{% load static %}
+
+{% block title %}Aunex Staff{% endblock %}
+
+{% block body %}
+
+<style>
+
+    .dropzone{
+        width:80%;
+        height:200px;
+        border:2px dashed #ccc;
+        color:#ccc;
+        line-height:200px;
+        text-align:center;
+        margin-left:auto;
+        margin-right:auto;
+        margin-top:8px;
+        margin-bottom:8px;
+    }
+
+    .dropzone.dragover{
+        border-color:#000;
+        color:#000;
+     }
+
+</style>
+
+{% if type == "newImage" %}
+    <h3 class="display-4 text-center">New Image</h3>
+{% elif type == "newProductType" %}
+    <h3 class="display-4 text-center">New Product Type</h3>
+    <div class="text-center">Note: Amplifier, Equalizer, etc.</div>
+{% elif type == "newProductCategory" %}
+    <h3 class="display-4 text-center">New Product Category</h3>
+    <div class="text-center">Note: Mobile, Motorcyle, Powersport, etc.</div>
+{% elif type == "newProductSeries" %}
+    <h3 class="display-4 text-center">New Product Series</h3>
+    <div class="text-center">Note: Include "Series" in the name of the series if applicable.</div>
+{% elif type == "newProduct" %}
+    <h3 class="display-4 text-center">New Product</h3>
+{% elif type == "newProductManual" %}
+    <h3 class="display-4 text-center">New Product Manual</h3>
+    <div class="text-center">Note: Your browser may try to open the pdf instead of upload when using drag and drop.</div>
+{% else %}
+    <h3 class="display-4 text-center">New Database Item {{ newEntrySubmit }}</h3>
+{% endif %}
+<br>
+
+<form enctype="multipart/form-data" action="{% url 'newEntrySubmit' type %}" method="POST" style="text-align: center;">
+    {% csrf_token %}
+
+    {% if entryForm.name is not None %}
+        <div class="form-group">
+            {{ entryForm.name.errors }}
+            {{ entryForm.name.label }}:<br>
+            {{ entryForm.name }}
+            <hr>
+        </div>
+    {% endif %}
+
+    {% if entryForm.image is not None %}
+        <div class="form-group">
+            {{ entryForm.image.errors }}
+            {{ entryForm.image.label }}:<br>
+            {% if type == "newImage" %}
+                <div class="dropzone" id="dropzone">Drop files here</div>
+            {% endif %}
+            {% if type == "newProduct" or type == "newProductSeries" %}
+                Icon image that appears as the clickable link.<br>
+            {% endif %}
+            {{ entryForm.image }}
+            <hr>
+        </div>
+    {% endif %}
+
+    {% if entryForm.banner is not None %}
+        <div class="form-group">
+            {{ entryForm.banner.errors }}
+            {{ entryForm.banner.label }}:<br>
+            Image that appears at the top of the page for the series.<br>
+            {{ entryForm.banner }}
+            <hr>
+        </div>
+    {% endif %}
+
+    {% if entryForm.gallery is not None %}
+        <div class="form-group">
+            {{ entryForm.gallery.errors }}
+            {{ entryForm.gallery.label }}:<br>
+            Select all images to show in the product image carousel.<br>
+            Hold 'ctrl' to select multiple.<br>
+            {{ entryForm.gallery }}
+            <hr>
+        </div>
+    {% endif %}
+
+    {% if entryForm.products is not None %}
+        <div class="form-group">
+            {{ entryForm.products.errors }}
+            {{ entryForm.products.label }}:<br>
+            Select all products in this series.<br>
+            {{ entryForm.products }}
+            <hr>
+        </div>
+    {% endif %}
+
+    {% if entryForm.summary is not None %}
+        <div class="form-group">
+            {{ entryForm.summary.errors }}
+            {{ entryForm.summary.label}}:<br>
+            Brief description. Max 2048 characters.<br>
+            {{ entryForm.summary|linebreaks  }}
+            <hr>
+        </div>
+    {% endif %}
+    
+    {% if entryForm.description is not None %}
+        <div class="form-group">
+            {{ entryForm.description.errors }}
+            {{ entryForm.description.label }}:<br>
+            Describe the product series. Appears when indexed.<br>
+            {{ entryForm.description }}
+            <hr>
+        </div>
+    {% endif %}
+
+    {% if entryForm.category is not None %}
+        <div class="form-group">
+            {{ entryForm.category.errors }}
+            {{ entryForm.category.label }}:<br>
+            Hold 'ctrl' to select multiple.<br>
+            {{ entryForm.category }}
+            <hr>
+        </div>
+    {% endif %}
+
+    {% if entryForm.type is not None %}
+        <div class="form-group">
+            {{ entryForm.type.errors }}
+            {{ entryForm.type.label }}:<br>
+            {{ entryForm.type }}
+            <hr>
+        </div>
+    {% endif %}
+
+    {% if entryForm.specSheet is not None %}
+        <div class="form-group">
+            {{ entryForm.specSheet.errors }}
+            {{ entryForm.specSheet.label }}:<br>
+            The specsheet for the product (as an image).<br>
+            {{ entryForm.specSheet }}
+            <hr>
+        </div>
+    {% endif %}
+
+    {% if entryForm.file is not None %}
+        <div class="form-group">
+            {{ entryForm.file.errors }}
+            {{ entryForm.file.label }}:<br>
+            {% if type == "newProductManual" %}
+                <div class="dropzone" id="dropzone">Drop files here</div>
+            {% else %}
+                Extra file to include on the product's page (manual).<br>
+            {% endif %}
+            {{ entryForm.file }}
+            <hr>
+        </div>
+    {% endif %}
+
+    {% if entryForm.infoImage is not None %}
+        <div class="form-group">
+            {{ entryForm.infoImage.errors }}
+            {{ entryForm.infoImage.label }}:<br>
+            Extra image for product series specifications.<br>
+            {{ entryForm.infoImage }}
+            <hr>
+        </div>
+    {% endif %}
+
+    <input type="submit">
+
+
+</form>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+        var r = document.getElementById("id_summary")
+        if(r != null){
+            r.style.width = '80%';
+        }
+        r = document.getElementById("id_description")
+        if(r != null){
+            r.style.width = '80%';
+        }
+        r = document.getElementById("id_category")
+        if(r != null){
+            r.style.width = '30%';
+        }
+        r = document.getElementById("id_type")
+        if(r != null){
+            r.style.width = '30%';
+        }
+        r = document.getElementById("id_gallery")
+        if(r != null){
+            r.style.width = '50%';
+            r.style.height = '400px';
+        }
+        r = document.getElementById("id_products")
+        if(r != null){
+            r.style.width = '50%';
+            r.style.height = '400px';
+        }
+    });
+</script>
+
+<!-- Drag and Drop -->
+<script>
+
+    (function(){
+        var dropzone = document.getElementById('dropzone');
+        var fInput = document.getElementById('id_image')
+
+        dropzone.ondrop=function(e){
+            fInput.files=e.dataTransfer.files
+            e.preventDefault();
+            this.className='dropzone';
+            x=e.dataTransfer.files
+            console.log(x)
+        };
+
+        dropzone.ondragover=function(){
+            this.className='dropzone dragover';
+            return false;
+        };
+
+        dropzone.ondragleave=function(){
+            this.className='dropzone';
+            return false;
+        };
+    }());
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,158 @@
+#map-canvas {
+    height: 80%;
+    background-color: grey;
+}
+
+html,
+body {
+    font-family: 'Quicksand', sans-serif;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes appear {
+    0% {width: 0%;}
+    100% {width: 30%;}
+}
+
+#map-side-panel {
+    text-align: center;
+    width: 30%;
+    height: 80%;
+    background-color: white;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    transition: all .2s ease-out;
+    animation-name: appear;
+    animation-duration: 1s;
+    animation-play-state: paused;
+    padding: 4px;
+}
+
+@keyframes show {
+    0% {opacity: 0;}
+    90% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+#location-info  {
+    animation-play-state: inherit;
+    animation-name: show;
+    animation-duration: 1.1s;
+}
+
+#map-search-bar {
+    margin: 8px;
+    text-align: center;
+}
+
+#findDealers {
+    background: #b80b4b;
+    margin-top: 4px;
+    border: none;
+}
+
+#searchLocation {
+    size: 60;
+}
+
+#locateMe {
+    background: #ffffff;
+    border: 1px solid #808184;
+    color: #808184;
+    margin-top: 4px;
+}
+
+.map-side-input {
+    margin-top: 4px;
+    margin-right: 8px;
+}
+
+.open {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.hero {
+    width: 100%;
+    height: auto;
+    max-height: 166px;
+    display: block;
+}
+
+.place {
+    font-family: 'open sans', arial, sans-serif;
+    font-size: 19px;
+}
+
+.locationNumber {
+    display: block;
+    text-align: center;
+    border-bottom: 2px solid #b3b4b8;
+}
+
+.locationPanel {
+    width: 95%;
+    display: inline-block;
+    text-align: left;
+    margin: 4px auto 32px auto;
+    padding: 2px 2px 2px 4px;
+}
+
+.locationUnderBar {
+    border-bottom: 8px solid #e9e9e9;
+}
+
+.highlightAnimation {
+    animation-name: highlight;
+    animation-duration: 2s;
+}
+
+@keyframes highlight {
+    0% {background-color: #ffffff}
+    25% {background-color: #cccccc}
+    35% {background-color: #ffffff}
+    75% {background-color: #cccccc}
+    100% {background-color: #ffffff}
+}
+
+.locationPanelLogo {
+    width: 15%;
+}
+
+.test {
+    border: 1px solid red;
+}
+
+.details {
+    color: darkslategrey;
+}
+
+@media (max-width: 800px){
+
+    #searchLocation {
+        size: 40;
+    }
+
+    #map-side-panel {
+        margin: auto;
+        text-align: center;
+        width: 100%;
+        height: 30%;
+        position: static;
+        overflow-x: hidden;
+        padding: 0px;
+        margin-bottom: 16px;
+    }
+
+    .locationPanel{
+        width: 100%;
+    }
+
+    @keyframes appear {
+        0% {width: 0%;}
+        100% {width: 80%;}
+    }
+}

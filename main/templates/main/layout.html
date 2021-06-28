@@ -1,0 +1,169 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158972918-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-158972918-1');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Aunex{% endblock %}</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/img/favicon.png' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="{% static 'main/style.css' %}" rel="stylesheet">
+
+    {% block head %}{% endblock %}
+
+</head>
+
+<body>
+
+<!-- Favicon -->
+<link rel="shortcut icon" type=“image/png” href="{% static 'main/img/favicon.png' %}">
+
+<!-- Navigation1 -->
+
+    <!-- top right links & search -->
+    
+<!-- Navigation2 -->
+<nav class="navbar navbar-expand-md navbar-light bg-light sticky-top">
+<div class="container-fluid">
+     <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'main/img/logo.png' %}"></a>
+     <button class="navbar-toggler" type="button" data-toggle="collapse"
+     data-target="#navbarResponsive">
+         <span class="navbar-toggler-icon"></span>
+     </button>
+     <div class="collapse navbar-collapse" id="navbarResponsive">
+         <ul class="navbar-nav ml-auto">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Account
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{% url 'changePassword' %}">Change Password</a>
+                            <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </div>
+                </li>
+                {% if user.is_staff %}
+                <li class="nav-item">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Staff
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            {% if user.is_superuser %}
+                                <a class="dropdown-item" href="{% url 'admin:index' %}">Admin Panel</a>
+                                <a class="dropdown-item" href="{% url 'createUser' %}">Register User</a>
+                            {% endif %}
+                            {% if user.is_staff %}
+                                <a class="dropdown-item" href="{% url 'newImage' %}" >Add Image</a>
+                                <a class="dropdown-item" href="{% url 'newProductManual' %}">Add Product Manual</a>
+                                <a class="dropdown-item" href="{% url 'newProduct' %}">Add Product</a>
+                                <a class="dropdown-item" href="{% url 'newProductSeries' %}">Add Product Series</a>
+                                <a class="dropdown-item" href="{% url 'newProductCategory' %}">Add Product Category</a>
+                                <a class="dropdown-item" href="{% url 'newProductType' %}">Add Product Type</a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </li>
+                {% endif %}
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}"><strong>Login</strong></a>
+                </li>
+            {% endif %}
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'mobile' %}">Mobile</a>
+             </li>  
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'motorcycle' %}">Motorcycle</a>
+             </li>
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'powersport' %}">Powersport</a>
+             </li>  
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'marine' %}">Marine</a>
+             </li>  
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'dealerlocator' %}">Dealer Locator</a>
+             </li>  
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'about' %}">About</a>
+             </li>  
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'support' %}">Support</a>
+             </li>  
+             <li class="nav-item">
+                <a class="nav-link" href="{% url 'contact' %}">Contact Us</a>
+             </li>       
+         </ul>
+    </div>
+</div>
+</nav>
+
+{% block body %}
+{% endblock %}
+
+<!--- Connect -->
+<div class="container-fluid padding">
+<div class="row text-center padding">
+	<div class="col-12">
+	</div>
+	<div class="col-12 social padding">
+        <a class="link" href="https://fb.me/AunexSocial" target="_blank"><i class="fab fa-facebook"></i></a>
+        <a class="link" href="https://www.instagram.com/AunexInc" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a class="link" href="https://www.youtube.com/channel/UCk6Om9MM7nEbXozwKpR9V8w?view_as=subscriber" target="_blank"><i class="fab fa-youtube"></i></a>
+	</div>
+</div>
+</div>
+
+<!--- Footer -->
+<footer>
+	<div class="container-fluid padding">
+	<div class="row text-center">
+		<div class="col-md-4">
+		<img src="{% static 'main/img/aunex-wht.png' %}">
+		<hr class="light">
+        <a style="color:#c7c7c7;" href="tel:909-589-5010">Tel: (909) 589 - 5010</p> </a>
+        <a style="color:#c7c7c7;" href="tel:909-589-5010">Fax: (909) 589 - 5011</p> </a>
+		<p>Chino, California</p>
+	</div>
+	<div class="col-md-4">
+		<hr class="light">
+		<h5>Our Hours</h5>
+		<hr class="light">
+        <p>Monday - Friday : 8:30am - 5:30pm PST</p>
+		<p></p>
+	</div>
+		<div class="col-md-4">
+		<hr class="light">
+		<h5>Email Us</h5>
+		<hr class="light">
+		<a style="color:#c7c7c7;" href="mailto: sales@aunexusa.com">sales@aunexusa.com</p> </a>
+        <a style="color:#c7c7c7;" href="mailto: warranty@aunexusa.com">warranty@aunexusa.com</p> </a>
+        <a style="color:#c7c7c7;" href="mailto: tech@aunexusa.com">tech@aunexusa.com</p> </a>
+	</div>
+	<div class="col-12">
+		<hr class="light">
+		<h5>&copy; 2021 Aunex, Inc All Rights Reserved</h5>
+	</div>
+</div>
+</div>
+</footer>
+
+</body>
+</html>

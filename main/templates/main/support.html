@@ -1,0 +1,118 @@
+{% extends "main/layout.html" %}
+
+{% load static %}
+
+{% block title %}Aunex{% endblock %}
+
+{% block body %}
+
+<!--- Image Slider -->
+<div id="slides" class="carousel slide" data-ride="carousel">
+</ul>
+<div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="{% static 'main/img/background-half5.png' %}">
+        <div class="carousel-caption">
+            <h1 class="display-2"></h1>
+            <h3></h3>
+        </div>
+    </div>
+</div>
+</div>	
+
+<!--- Jumbotron -->
+<!-----FAB--->
+<a href="{% url 'index' %}">
+    <div class="fab-container">
+        <div class="fab-icon-holder">
+            <i class="fas fa-home"></i>
+        </div>
+    </div>
+</a>
+
+
+<!--- Welcome Section -->
+<!--- Welcome Section -->
+<div class="container-fluid padding">
+   <div class="row welcome text-center">
+       <div class="col-12">
+               <div class="col-12">
+   </div>
+           <h1 class="display-4">Technical Support</h1>
+       </div>
+       <div class="col-12">
+           <p class="lead">For immediate support please call us at (909) 589 - 5010 or email us at tech@aunexusa.com</p>
+   </div>
+   <div class="col-12">
+       </div>
+<hr class="my-4">
+</div>
+   </div>
+</div>
+</div>
+<div class="container-fluid padding">
+   <div class="row welcome text-center">
+       <div class="col-12">
+           <h1 class="display-4">Warranty Information</h1>
+       </div>
+       <div class="col-12">
+           <p class="lead">We take your time seriously. Please take a look at the options listed below.</p>
+   </div>
+</div>
+</div>
+
+
+<!--- Three Column Section -->
+<div class="container-fluid padding">
+<div class="row text-center padding">
+   <div class="col-xs-12 col-sm-6 col-md-4">
+       <img src="{% static 'main/img/war2-sm.png' %}" class="img-fluid">
+       <h3>AE Series Amplifiers Warranty</h3>
+       <p>2 years from consumer purchase date. Refer to the product manuals for warranty period and additional information. Original receipt may
+be required. Please Note: Any returned product that has the Serial Number defaced, removed or
+altered will be rejected and the Warranty will be voided.</p>
+   </div>
+       <div class="col-xs-12 col-sm-6 col-md-4">
+       <img src="{% static 'main/img/war1-sm.png' %}" class="img-fluid">
+       <h3>AMX, AM, AC and AP Series Amplifiers Warranty</h3>
+       <p>1 year from consumer purchase date. Refer to the product manuals for warranty period and additional information. Original receipt may
+be required. Please Note: Any returned product that has the Serial Number defaced, removed or
+altered will be rejected and the Warranty will be voided.</p>
+   </div>
+       <div class="col-xs-12 col-md-4">
+       <img src="{% static 'main/img/war2-sm.png' %}" class="img-fluid">
+       <h3>AP Series Equalizers Warranty</h3>
+       <p>AP Series Equalizers is 2 years from consumer purchase date. Refer to the product manuals for warranty period and additional information. Original receipt may
+be required. Please Note: Any returned product that has the Serial Number defaced, removed or
+altered will be rejected and the Warranty will be voided.</p>
+   </div>
+       <div class="col-xs-12 col-md-4">
+       <img src="{% static 'main/img/war1-sm.png' %}" class="img-fluid">
+       <h3>AE and AP Accessories Warranty</h3>
+       <p>AE and AP Accessories is 1 year from consumer purchase date. Refer to the product manuals for warranty period and additional information. Original receipt may
+be required. Please Note: Any returned product that has the Serial Number defaced, removed or
+altered will be rejected and the Warranty will be voided.</p>
+   </div>
+</div>
+<hr class="my-4">
+</div>
+
+
+
+<!--- Two Column Section -->
+
+
+<!--- Fixed background -->
+
+
+<!--- Emoji Section -->
+
+
+ 
+<!--- Meet the team -->
+
+<!--- Cards -->
+
+<!--- Two Column Section -->
+
+{% endblock %}

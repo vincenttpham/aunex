@@ -1,0 +1,143 @@
+{% extends "main/layout.html" %}
+
+{% load static %}
+
+{% block title %}Aunex{% endblock %}
+
+{% block body %}
+
+<!--- Image Slider -->
+<div id="slides" class="carousel slide" data-ride="carousel">
+</ul>
+<div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="{% static 'main/img/background-half.png' %}">
+        <div class="carousel-caption">
+            <h1 class="display-2"></h1>
+            <h3></h3>
+        </div>
+    </div>
+</div>
+</div>	
+
+<!--- Jumbotron -->
+<!-----FAB--->
+<a href="{% url 'index' %}">
+    <div class="fab-container">
+        <div class="fab-icon-holder">
+            <i class="fas fa-home"></i>
+        </div>
+    </div>
+</a>
+
+
+<!--- Welcome Section -->
+<div class="container-fluid padding">
+   <div class="row welcome text-center">
+       <div class="col-12">
+           <h1 class="display-4">Mobile Amplifiers</h1>
+       </div>
+       <hr>
+       <div class="col-12">
+           <p class="lead">With 5 series of mobile amplifiers to choose from, we are certain you'll find the perfect solution for your own unique sound.</p>
+   </div>
+</div>
+</div>
+
+
+<!--- Three Column Section -->
+<div class="container-fluid padding">
+<div class="row text-center padding">
+   
+    {% for series in amps %}
+
+    <div class="col-xs-12 col-sm-6 col-md-4">
+        <a href="{% url 'series' series.name %}">
+        <img src="{{ series.image.image.url }}" class="img-fluid image1">
+        </a>
+        <h3>{{ series.name }}</h3>
+        <p>{{ series.description }}</p>
+    </div>
+
+{% endfor %}
+
+
+
+<!--- Two Column Section -->
+<!--- Welcome Section -->
+<div class="container-fluid padding">
+   <div class="row welcome text-center">
+       <div class="col-12">
+           <h1 class="display-4">Mobile Equalizers</h1>
+       </div>
+       <hr>
+       <div class="col-12">
+           <p class="lead">With 2 AP Series equalizers to choose from, we are certain you'll find the perfect solution for your own unique sound.</p>
+   </div>
+</div>
+</div>
+
+
+<!--- Three Column Section -->
+<div class="container-fluid padding">
+<div class="row text-center padding">
+    {% for series in eqs %}
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <a href="{% url 'series' series.name %}">
+            <img src="{{ series.image.image.url }}" class="img-fluid image1">
+            </a>
+            <h3>{{ series.name }}</h3>
+            <p>{{ series.description }}</p>
+        </div>
+
+    {% endfor %}
+
+
+
+<!--- Welcome Section -->
+<div class="container-fluid padding">
+   <div class="row welcome text-center">
+       <div class="col-12">
+           <h1 class="display-4">Mobile Accessories</h1>
+       </div>
+       <hr>
+       <div class="col-12">
+           <p class="lead">With an abundance of premium quality elite accessories to choose from, we are certain you'll find the perfect solution for your own unique sound.</p>
+   </div>
+</div>
+</div>
+
+
+<!--- Three Column Section -->
+<div class="container-fluid padding">
+<div class="row text-center padding">
+    {% for series in accs %}
+
+        <div class="col-xs-12 col-sm-6 col-md-4">
+            <a href="{% url 'series' series.name %}">
+            <img src="{{ series.image.image.url }}" class="img-fluid image1">
+            </a>
+            <h3>{{ series.name }}</h3>
+            <p>{{ series.description }}</p>
+        </div>
+
+    {% endfor %}
+</div>
+<hr class="my-4">
+</div>
+</div>
+<!--- Fixed background -->
+
+
+<!--- Emoji Section -->
+
+
+ 
+<!--- Meet the team -->
+
+<!--- Cards -->
+
+<!--- Two Column Section -->
+
+{% endblock %}
