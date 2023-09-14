@@ -1,0 +1,51 @@
+{% extends "main/layout.html" %}
+
+{% load static %}
+
+{% block title %}Aunex{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row d-flex justify-content-center">
+        <div class="col-12 col-lg-6">
+            <h3 class="display-4 text-center my-5">Rep Order</h3>
+
+            <div class="text-center my-4">
+
+                <p class="my-4">Fill in order form and upload to submit order.</p>
+
+                <a href="{{ order_form.file.url }}">
+                    {% if order_form.name %}
+                    {{ order_form.name }}
+                    {% else %}
+                    {{ order_form.file.name }}
+                    {% endif %}
+                </a>
+
+                {% if messages %}
+                <ul class="messages text-danger">
+                    {% for message in messages %}
+                    {% if 'error' in message.tags %}
+                    <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+                    {% endif %}
+                    {% endfor %}
+                </ul>
+                {% endif %}
+            </div>
+
+            <form action="{% url 'rep_order' %}" method="POST" enctype="multipart/form-data" class="form-inline d-flex justify-content-center">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input type="file" name="xlsx_file" id="xlsx_file" required="True" class="form-control-file">
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-info">Submit order</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %}

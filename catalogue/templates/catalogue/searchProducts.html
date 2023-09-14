@@ -1,0 +1,186 @@
+{% extends "main/layout.html" %}
+
+{% load static %}
+
+{% block title %}Aunex{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <nav class="sticky-top pt-5">
+        <div class="row bg-white border">
+            <div class="col-12 col-md-6 py-1">
+                <h3>Filter by type</h3>
+                <div class="row">
+                    <div class="col-4 p-1">
+                        <form method="GET" class="form-inline">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="hidden" name="type" value="Amplifier">
+                                {% if type.name == 'Amplifier' %}
+                                <button class="btn form-control text-danger" type="submit" onclick="pagePosition();">Amplifiers</button>
+                                {% else %}
+                                <button class="btn form-control" type="submit" onclick="pagePosition();">Amplifiers</button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-4 p-1">
+                        <form method="GET" class="form-inline">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="hidden" name="type" value="Equalizer">
+                                {% if type.name == 'Equalizer' %}
+                                <button class="btn form-control text-danger" type="submit" onclick="pagePosition();">Processors</button>
+                                {% else %}
+                                <button class="btn form-control" type="submit" onclick="pagePosition();">Processors</button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-4 p-1">
+                        <form method="GET" class="form-inline">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="hidden" name="type" value="Accessory">
+                                {% if type.name == 'Accessory' %}
+                                <button class="btn form-control text-danger" type="submit" onclick="pagePosition();">Accessories</button>
+                                {% else %}
+                                <button class="btn form-control" type="submit" onclick="pagePosition();">Accessories</button>
+                                {% endif %}
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% if type.name == 'Amplifier' or channels  %}
+            <div class="col-12 col-md-6 py-1">
+                <h5 class="">Sort by channels</h5>
+                <div class="row">
+                    <div class="col-12 col-lg-7 py-1">
+                        <form method="GET">
+                            {% csrf_token %}
+                            <div class="form-check form-check-inline">
+                                {% if channels == '.1' %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio1" value="1" onchange="pagePosition();this.form.submit();" checked>
+                                {% else %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio1" value="1" name="channels" onchange="pagePosition();this.form.submit();">
+                                {% endif %}
+                                <label class="form-check-label" for="inlineCheckbox1">1</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                {% if channels == '.2' %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio2" value="2" name="channels" onchange="pagePosition();this.form.submit();" checked>
+                                {% else %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio2" value="2" name="channels" onchange="pagePosition();this.form.submit();">
+                                {% endif %}
+                                <label class="form-check-label" for="inlineRadio2">2</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                {% if channels == '.3' %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio3" value="3" name="channels" onchange="pagePosition();this.form.submit();" checked>
+                                {% else %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio3" value="3" name="channels" onchange="pagePosition();this.form.submit();">
+                                {% endif %}
+                                <label class="form-check-label" for="inlineRadio3">3</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                {% if channels == '.4' %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio4" value="4" name="channels" onchange="pagePosition();this.form.submit();" checked>
+                                {% else %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio4" value="4" name="channels" onchange="pagePosition();this.form.submit();">
+                                {% endif %}
+                                <label class="form-check-label" for="inlineRadio4">4</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                {% if channels == '.5' %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio5" value="5" name="channels" onchange="pagePosition();this.form.submit();" checked>
+                                {% else %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio5" value="5" name="channels" onchange="pagePosition();this.form.submit();">
+                                {% endif %}
+                                <label class="form-check-label" for="inlineRadio5">5</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                {% if channels == '.6' %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio6" value="6" name="channels" onchange="pagePosition();this.form.submit();" checked>
+                                {% else %}
+                                <input class="form-check-input" type="radio" name="channels" id="inlineRadio6" value="6" name="channels" onchange="pagePosition();this.form.submit();">
+                                {% endif %}
+                                <label class="form-check-label" for="inlineRadio6">6</label>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+        </div>
+    </nav>
+
+    <div class="row">
+
+        {% if search and not products %}
+
+        <div class="col-12">
+            <h6 class="text-center my-5">No matching products found for "{{ search }}".</h6>
+        </div>
+
+        {% elif type %}
+
+        {% for s in series %}
+        {% for product in s.products.all %}
+        {% if not product.pop %}
+        
+        {% if channels %}
+        {% if channels in product.name %}
+        <div class="col-12 col-md-4 col-lg-2">
+
+            <a href="{% url 'product' product.name %}" class="text-dark">
+                <div class="img-thumbnail">
+                    <h6>{{ product.name }}</h6>
+                    <img src="{{ product.image.image.url }}" class="img-thumbnail border-0">
+                </div>
+            </a>
+
+        </div>
+        {% endif %}
+        {% else %}
+        <div class="col-12 col-md-4 col-lg-2">
+
+            <a href="{% url 'product' product.name %}" class="text-dark">
+                <div class="img-thumbnail">
+                    <h6>{{ product.name }}</h6>
+                    <img src="{{ product.image.image.url }}" class="img-thumbnail border-0">
+                </div>
+            </a>
+
+        </div>
+        {% endif %}
+        
+        {% endif %}
+        {% endfor %}
+        {% endfor %}
+
+        {% else %}
+
+        {% for product in products %}
+        {% if not product.pop %}
+        <div class="col-12 col-md-4 col-lg-2">
+
+            <a href="{% url 'product' product.name %}" class="text-dark">
+                <div class="img-thumbnail">
+                    <h6>{{ product.name }}</h6>
+                    <img src="{{ product.image.image.url }}" class="img-thumbnail border-0">
+                </div>
+            </a>
+
+        </div>
+        {% endif %}
+        {% endfor %}
+
+        {% endif %}
+    </div>
+
+</div>
+
+{% endblock %}

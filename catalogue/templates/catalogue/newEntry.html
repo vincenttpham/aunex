@@ -44,6 +44,70 @@
 {% elif type == "newProductManual" %}
     <h3 class="display-4 text-center">New Product Manual</h3>
     <div class="text-center">Note: Your browser may try to open the pdf instead of upload when using drag and drop.</div>
+{% elif type == "newDealer" %}
+    <h3 class="display-4 text-center">New Dealer</h3>
+    <div class="text-center my-3">Upload a .csv file to update the dealer list or add manually.</div>
+    <hr>
+    <div class="text-center">
+        {% if messages %}
+        <ul class="messages text-danger">
+            {% for message in messages %}
+            {% if 'error' in message.tags %}
+            <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+            {% endif %}
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
+    <div class="d-flex justify-content-center">
+        <form action="{% url 'uploadDealers' %}" method="POST" enctype="multipart/form-data" class="form-inline">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="file" name="csv_file" id="csv_file" required="True" class="form-control-file">
+            </div>
+            <div class="form-group">
+                <button class="btn btn-info">Upload</button>
+            </div>
+        </form>
+    </div>
+    <div class="d-flex justify-content-center">
+        <form action="{% url 'updateDealers' %}" method="POST" enctype="multipart/form-data" class="form">
+            {% csrf_token %}
+            <div class="form-group">
+                {% if dealers %}
+                <button class="btn btn-success">Update Dealers</button>
+                {% else %}
+                <button class="btn btn-success" disabled>Update Dealers</button>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+    <h6 class="text-center">Last updated by: {{ last_update.username }} - {{ last_update.updated_at }}</h6>
+    <div class="container text-center">
+        {% if update == 'required' %}
+        <span>⚠️</span>
+        {% endif %}
+        <a class="dropdown-toggle" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+            Current Dealers
+        </a>
+        <div class="collapse" id="collapseExample">
+            <div class="card card-body">
+                {% for dealer in dealers %}
+                <div class="row d-flex justify-content-center">
+                    <div class="col-12 col-lg-8 text-left p-0">
+                        {% if dealer.latitude and dealer.longitude %}
+                        <span class="text-success">✓ {{ dealer.name }}</span>
+                        {% else %}
+                        <span class="text-danger">X {{ dealer.name }}</span>
+                        - No geodata found. Check address for errors.
+                        {% endif %}
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <hr>
 {% else %}
     <h3 class="display-4 text-center">New Database Item {{ newEntrySubmit }}</h3>
 {% endif %}
@@ -179,6 +243,70 @@
             <hr>
         </div>
     {% endif %}
+
+    <!-- Dealer Locations -->
+    {% if entryForm.telephone is not None %}
+        <div class="form-group">
+            {{ entryForm.telephone.errors }}
+            {{ entryForm.telephone.label }}:<br>
+            {{ entryForm.telephone }}
+            <hr>
+        </div>
+    {% endif %}
+    <div class="d-flex justify-content-center">
+        {% if entryForm.address is not None %}
+            <div class="form-group">
+                {{ entryForm.address.errors }}
+                {{ entryForm.address.label }}:<br>
+                {{ entryForm.address }}
+            </div>
+        {% endif %}
+        {% if entryForm.city is not None %}
+            <div class="form-group">
+                {{ entryForm.city.errors }}
+                {{ entryForm.city.label }}:<br>
+                {{ entryForm.city }}
+            </div>
+        {% endif %}
+        {% if entryForm.state is not None %}
+            <div class="form-group">
+                {{ entryForm.state.errors }}
+                {{ entryForm.state.label }}:<br>
+                {{ entryForm.state }}
+            </div>
+        {% endif %}
+        {% if entryForm.zipcode is not None %}
+            <div class="form-group">
+                {{ entryForm.zipcode.errors }}
+                {{ entryForm.zipcode.label }}:<br>
+                {{ entryForm.zipcode }}
+            </div>
+        {% endif %}
+    </div>
+    <hr>
+    <div class="d-flex justify-content-center">
+        {% if entryForm.website is not None %}
+            <div class="form-group">
+                {{ entryForm.website.errors }}
+                {{ entryForm.website.label }}:<br>
+                {{ entryForm.website }}
+            </div>
+        {% endif %}
+        {% if entryForm.brand is not None %}
+            <div class="form-group">
+                {{ entryForm.brand.errors }}
+                {{ entryForm.brand.label }}:<br>
+                {{ entryForm.brand }}
+            </div>
+        {% endif %}
+        {% if entryForm.elite is not None %}
+            <div class="form-group">
+                {{ entryForm.elite.errors }}
+                {{ entryForm.elite.label }}:<br>
+                {{ entryForm.elite }}
+            </div>
+        {% endif %}
+    </div>
 
     <input type="submit">
 

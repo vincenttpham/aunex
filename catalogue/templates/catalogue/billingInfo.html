@@ -1,0 +1,129 @@
+{% extends "main/layout.html" %}
+
+{% load static %}
+
+{% block title %}Aunex{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h1 class="display-4 text-center my-5">Billing Info</h1>
+
+    <form action="{% url 'place_order' %}" method="POST">
+        {% csrf_token %}
+
+        <div class="row">
+            <div class="col-12 col-lg-8">
+                <h6 class="mb-5">
+                    <a href="{% url 'cart' %}">
+                        <i class="fas fa-arrow-alt-circle-left"></i> Return to cart
+                    </a>
+                </h6>
+
+                <div class="form-group">
+                    <label for="bill_to">Bill To:</label>
+                    <input type="text" class="form-control" id="bill_to" name="bill_to" value="{{ last_order.bill_to }}">
+                </div>
+                <div class="form-group">
+                    <label for="ship_to">Ship To:</label>
+                    <input type="text" class="form-control" id="ship_to" name="ship_to" value="{{ last_order.ship_to }}">
+                </div>
+                <div class="form-group">
+                    <label for="shipping">Shipping:</label>
+                    <input type="text" class="form-control" id="shipping" name="shipping" value="{{ last_order.shipping }}">
+                </div>
+                <div class="form-group">
+                    <label for="terms">Terms:</label>
+                    <input type="text" class="form-control" id="terms" name="terms" value="{{ last_order.terms }}">
+                </div>
+                <div class="form-group">
+                    <label for="pobox">P.O.#:</label>
+                    <input type="text" class="form-control" id="pobox" name="po_box" value="{{ last_order.po_box }}">
+                </div>
+                <div class="form-group">
+                    <label for="rep">Rep:</label>
+                    <input type="text" class="form-control" id="rep" name="rep" value="{{ last_order.rep }}">
+                </div>
+                <div class="form-group">
+                    <label for="comments">Comments (optional):</label>
+                    <textarea class="form-control" id="comments" name="comments" rows="3"></textarea>
+                </div>
+        
+            </div>
+            <div class="col-12 col-lg-4">
+                
+                <div class="card p-2">
+
+                    <h6 class="text-center">ORDER BREAKDOWN</h6>
+    
+                    <div class="row">
+    
+                        {% for s in series %}
+                        <div class="col-7 py-0">{{ s.name }}</div>
+                        <div class="col-5 text-right py-0">${{ s.total }}</div>
+                        {% endfor %}
+    
+                        <div class="col-7 py-0">Subtotal</div>
+                        <div class="col-5 text-right py-0">${{ cart_total }}</div>
+                    
+                    </div>
+    
+                    <hr>
+    
+                    <h6 class="text-center">AUNEX</h6>
+    
+                    <div class="row">
+    
+                        <div class="col-7 py-0">Weight:</div>
+                        <div class="col-5 text-right py-0">{{ aunex_weight }}</div>
+    
+                        <div class="col-7 py-0">Subtotal:</div>
+                        <div class="col-5 text-right py-0">${{ aunex_total }}</div>
+    
+                        <div class="col-7 py-0">Discount:</div>
+                        <div class="col-5 text-right py-0">0%</div>
+    
+                        <div class="col-7 py-0">With Discount:</div>
+                        <div class="col-5 text-right py-0">${{ aunex_total }}</div>
+                    
+                    </div>
+    
+                    <h6 class="text-center">MUSWAY</h6>
+    
+                    <div class="row">
+    
+                        <div class="col-7 py-0">Weight:</div>
+                        <div class="col-5 text-right py-0">{{ musway_weight }}</div>
+    
+                        <div class="col-7 py-0">Subtotal:</div>
+                        <div class="col-5 text-right py-0">${{ musway_total }}</div>
+    
+                        <div class="col-7 py-0">Discount:</div>
+                        <div class="col-5 text-right py-0">0%</div>
+    
+                        <div class="col-7 py-0">With Discount:</div>
+                        <div class="col-5 text-right py-0">${{ musway_total }}</div>
+    
+                    </div>
+                    
+                    <hr>
+    
+                    <div class="row">
+    
+                        <div class="col-7 py-0">Order Total:</div>
+                        <div class="col-5 text-right py-0">${{ cart_total }}</div>
+    
+                    </div>
+    
+                </div>
+
+                <input type="submit" class="btn btn-info btn-block my-3" value="Place Order">
+
+            </div>
+        </div>
+    </form>
+
+</div>
+
+{% endblock %}

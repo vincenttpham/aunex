@@ -1,0 +1,221 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-158972918-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-158972918-1');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Aunex</title>
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/img/favicon.png' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <link href="{% static 'main/style.css' %}" rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- Favicon -->
+<link rel="shortcut icon" type=“image/png” href="{% static 'main/img/favicon.png' %}">
+
+<div class="container">
+
+    <h1 class="display-4 text-center my-5">Order Summary</h1>
+
+    <div class="row">
+
+        <div class="col-12 col-lg-8">
+
+            <div class="row my-5">
+
+                <div class="col-4 py-0 px-1 font-weight-bold">Bill To:</div>
+                <div class="col-8 py-0 px-1">{{ order.bill_to }}</div>
+
+                <div class="col-4 py-0 px-1 font-weight-bold">Ship To:</div>
+                <div class="col-8 py-0 px-1">{{ order.ship_to }}</div>
+
+                <div class="col-4 py-0 px-1 font-weight-bold">Shipping:</div>
+                <div class="col-8 py-0 px-1">{{ order.shipping }}</div>
+
+                <div class="col-4 py-0 px-1 font-weight-bold">Terms:</div>
+                <div class="col-8 py-0 px-1">{{ order.terms }}</div>
+
+                <div class="col-4 py-0 px-1 font-weight-bold">Date:</div>
+                <div class="col-8 py-0 px-1">{{ order.created_at|date }}</div>
+
+                <div class="col-4 py-0 px-1 font-weight-bold">P.O.#:</div>
+                <div class="col-8 py-0 px-1">{{ order.po_box }}</div>
+
+                <div class="col-4 py-0 px-1 font-weight-bold">Rep:</div>
+                <div class="col-8 py-0 px-1">{{ order.rep }}</div>
+
+                <div class="col-4 py-0 px-1 font-weight-bold">Comments:</div>
+                <div class="col-8 py-0 px-1">{{ order.comments }}</div>
+
+            </div>
+
+            {% for s in series %}
+                {% for item in order.products.all %}
+                    {% if item.series == s %}
+                        <div class="row mt-3">
+                            {% ifchanged s.name %}
+                            <div class="col-6 col-lg-2 py-1 px-0">
+                                <h6 class="text-danger text-truncate">{{ s.name }}</h6>
+                            </div>
+                            {% endifchanged %}
+                            {% if forloop.first %}
+                            <div class="col-6 col-lg-2 border-bottom border-dark p-1">Price</div>
+                            <div class="col-6 col-lg-2 border-bottom border-dark p-1">Weight</div>
+                            <div class="col-6 col-lg-2 border-bottom border-dark p-1">Quantity</div>
+                            <div class="col-6 col-lg-2 border-bottom border-dark p-1">Total wt.</div>
+                            <div class="col-6 col-lg-2 border-bottom border-dark p-1">Total</div>
+                            {% endif %}
+                        </div>
+                        <div class="row">
+                            <div class="col-6 col-lg-2 border-bottom p-1 text-truncate">{{ item.product.name }}</div>
+                            <div class="col-6 col-lg-2 border-bottom p-1">${{ item.product.price }}</div>
+                            <div class="col-6 col-lg-2 border-bottom p-1">{{ item.product.weight }}</div>
+                            <div class="col-6 col-lg-2 border-bottom p-1 font-weight-bold">{{ item.quantity }}</div>
+                            <div class="col-6 col-lg-2 border-bottom p-1 font-weight-bold">{{ item.weight }}</div>
+                            <div class="col-6 col-lg-2 border-bottom p-1 font-weight-bold">${{ item.total }}</div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+
+        </div>
+
+        <div class="col-12 col-lg-4">
+
+            <div class="card p-2">
+
+                <h6 class="text-center">ORDER BREAKDOWN</h6>
+
+                <div class="row">
+
+                    {% for s in series %}
+                    <div class="col-7 py-0">{{ s.name }}</div>
+                    <div class="col-5 text-right py-0">${{ s.total }}</div>
+                    {% endfor %}
+
+                    <div class="col-7 py-0">Subtotal</div>
+                    <div class="col-5 text-right py-0">${{ order_total }}</div>
+                
+                </div>
+
+                <hr>
+
+                <h6 class="text-center">AUNEX</h6>
+
+                <div class="row">
+
+                    <div class="col-7 py-0">Weight:</div>
+                    <div class="col-5 text-right py-0">{{ aunex_weight }}</div>
+
+                    <div class="col-7 py-0">Subtotal:</div>
+                    <div class="col-5 text-right py-0">${{ aunex_total }}</div>
+
+                    <div class="col-7 py-0">Discount:</div>
+                    <div class="col-5 text-right py-0">0%</div>
+
+                    <div class="col-7 py-0">With Discount:</div>
+                    <div class="col-5 text-right py-0">${{ aunex_total }}</div>
+                
+                </div>
+
+                <h6 class="text-center">MUSWAY</h6>
+
+                <div class="row">
+
+                    <div class="col-7 py-0">Weight:</div>
+                    <div class="col-5 text-right py-0">{{ musway_weight }}</div>
+
+                    <div class="col-7 py-0">Subtotal:</div>
+                    <div class="col-5 text-right py-0">${{ musway_total }}</div>
+
+                    <div class="col-7 py-0">Discount:</div>
+                    <div class="col-5 text-right py-0">0%</div>
+
+                    <div class="col-7 py-0">With Discount:</div>
+                    <div class="col-5 text-right py-0">${{ musway_total }}</div>
+
+                </div>
+                
+                <hr>
+
+                <div class="row">
+
+                    <div class="col-7 py-0">Order Total:</div>
+                    <div class="col-5 text-right py-0">${{ order_total }}</div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!--- Connect -->
+<div class="container-fluid padding">
+    <div class="row text-center padding">
+        <div class="col-12">
+        </div>
+        <div class="col-12 social padding">
+            <a class="link" href="https://fb.me/AunexSocial" target="_blank"><i class="fab fa-facebook"></i></a>
+            <a class="link" href="https://www.instagram.com/AunexInc" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a class="link" href="https://www.youtube.com/channel/UCk6Om9MM7nEbXozwKpR9V8w?view_as=subscriber" target="_blank"><i class="fab fa-youtube"></i></a>
+        </div>
+    </div>
+</div>
+
+<!--- Footer -->
+<footer>
+	<div class="container-fluid padding">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <img src="{% static 'main/img/aunex-wht.png' %}">
+                <hr class="light">
+                <a style="color:#c7c7c7;" href="tel:909-589-5010">Tel: (909) 589 - 5010</p> </a>
+                <a style="color:#c7c7c7;" href="tel:909-589-5010">Fax: (909) 589 - 5011</p> </a>
+                <p>Chino, California</p>
+            </div>
+            <div class="col-md-4">
+                <hr class="light">
+                <h5>Our Hours</h5>
+                <hr class="light">
+                <p>Monday - Friday : 8:30am - 5:30pm PST</p>
+                <p></p>
+            </div>
+            <div class="col-md-4">
+                <hr class="light">
+                <h5>Email Us</h5>
+                <hr class="light">
+                <a style="color:#c7c7c7;" href="mailto: sales@aunexusa.com">sales@aunexusa.com</p> </a>
+                <a style="color:#c7c7c7;" href="mailto: warranty@aunexusa.com">warranty@aunexusa.com</p> </a>
+                <a style="color:#c7c7c7;" href="mailto: tech@aunexusa.com">tech@aunexusa.com</p> </a>
+            </div>
+            <div class="col-12">
+                <hr class="light">
+                <h5>&copy; 2021 Aunex, Inc All Rights Reserved</h5>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>

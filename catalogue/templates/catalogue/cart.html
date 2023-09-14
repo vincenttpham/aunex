@@ -1,0 +1,166 @@
+{% extends "main/layout.html" %}
+
+{% load static %}
+
+{% block title %}Aunex{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h1 class="display-4 text-center my-5">Cart</h1>
+
+    <div class="row">
+
+        <div class="col-12 col-lg-8">
+
+            <h6 class="mb-5">
+                <a href="{% url 'catalogue' %}">
+                    <i class="fas fa-arrow-alt-circle-left"></i> Return to catalogue
+                </a>
+            </h6>
+
+            {% if cart.products.all %}
+                {% for s in series %}
+                    {% for item in cart.products.all %}
+                        {% if item.series == s %}
+                            <div class="row mt-3">
+                                {% ifchanged s.name %}
+                                <div class="col-6 col-lg-2 py-1 px-0">
+                                    <h6 class="text-danger text-truncate">{{ s.name }}</h6>
+                                </div>
+                                {% endifchanged %}
+                                {% if forloop.first %}
+                                <div class="col-6 col-lg-2 p-1">Price</div>
+                                <div class="col-6 col-lg-2 p-1">Weight</div>
+                                <div class="col-6 col-lg-2 p-1">Quantity</div>
+                                <div class="col-6 col-lg-2 p-1">Total wt.</div>
+                                <div class="col-6 col-lg-2 p-1">Total</div>
+                                {% endif %}
+                            </div>
+                            <div class="row">
+                                <div class="col-6 col-lg-2 border p-1 text-truncate">{{ item.product.name }}</div>
+                                <div class="col-6 col-lg-2 border p-1">${{ item.product.price }}</div>
+                                <div class="col-6 col-lg-2 border p-1">{{ item.product.weight }}</div>
+                                <div class="col-6 col-lg-2 border p-1">
+                                    <span>{{ item.quantity }}</span>
+                                    <div class="dropdown float-right">
+                                        <a class="" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuLink">
+                                            <form action="{% url 'change_quantity' %}" method="POST" class="d-flex">
+                                                {% csrf_token %}
+                                                <input value="{{ item.product.name }}" name="name" hidden>
+                                                <input class="form-control mx-sm-2 py-0" type="text" value="{{ item.quantity }}" name="quantity">
+                                                <button class="btn bg-white text-info mr-sm-2 p-0" type="submit" onclick="pagePosition();">
+                                                    <i class="fas fa-save"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-lg-2 border p-1">
+                                    {{ item.weight }}
+                                </div>
+                                <div class="col-6 col-lg-2 border p-1">
+                                    ${{ item.total }}
+                                    <div class="dropdown float-right">
+                                        <a class="text-secondary" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-trash"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right text-center" aria-labelledby="dropdownMenuLink">
+                                            <a href="{% url 'remove_from_cart' item.product.name %}" class="text-danger" onclick="pagePosition();">
+                                                Remove <i class="fas fa-minus-circle"></i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                {% endfor %}
+            {% else %}
+            <h6 class="text-center">You have no items in your cart.</h6>
+            {% endif %}
+
+        </div>
+
+        <div class="col-12 col-lg-4">
+
+            <div class="card p-2">
+
+                <h6 class="text-center">ORDER BREAKDOWN</h6>
+
+                <div class="row">
+
+                    {% for s in series %}
+                    <div class="col-7 py-0">{{ s.name }}</div>
+                    <div class="col-5 text-right py-0">${{ s.total }}</div>
+                    {% endfor %}
+
+                    <div class="col-7 py-0">Subtotal</div>
+                    <div class="col-5 text-right py-0">${{ cart_total }}</div>
+                
+                </div>
+
+                <hr>
+
+                <h6 class="text-center">AUNEX</h6>
+
+                <div class="row">
+
+                    <div class="col-7 py-0">Weight:</div>
+                    <div class="col-5 text-right py-0">{{ aunex_weight }}</div>
+
+                    <div class="col-7 py-0">Subtotal:</div>
+                    <div class="col-5 text-right py-0">${{ aunex_total }}</div>
+
+                    <div class="col-7 py-0">Discount:</div>
+                    <div class="col-5 text-right py-0">0%</div>
+
+                    <div class="col-7 py-0">With Discount:</div>
+                    <div class="col-5 text-right py-0">${{ aunex_total }}</div>
+                
+                </div>
+
+                <h6 class="text-center">MUSWAY</h6>
+
+                <div class="row">
+
+                    <div class="col-7 py-0">Weight:</div>
+                    <div class="col-5 text-right py-0">{{ musway_weight }}</div>
+
+                    <div class="col-7 py-0">Subtotal:</div>
+                    <div class="col-5 text-right py-0">${{ musway_total }}</div>
+
+                    <div class="col-7 py-0">Discount:</div>
+                    <div class="col-5 text-right py-0">0%</div>
+
+                    <div class="col-7 py-0">With Discount:</div>
+                    <div class="col-5 text-right py-0">${{ musway_total }}</div>
+
+                </div>
+                
+                <hr>
+
+                <div class="row">
+
+                    <div class="col-7 py-0">Order Total:</div>
+                    <div class="col-5 text-right py-0">${{ cart_total }}</div>
+
+                </div>
+
+            </div>
+
+            {% if cart.products.all %}
+            <a href="{% url 'billing_info' %}" class="btn btn-info btn-block my-3">Continue</a>
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

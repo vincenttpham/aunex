@@ -1,3 +1,4 @@
+from decimal import Context
 from django.contrib.auth import authenticate, login, logout
 from django.views.decorators.clickjacking import xframe_options_exempt
 from django.contrib.auth.decorators import login_required
@@ -6,12 +7,13 @@ from django.http import HttpResponseRedirect, JsonResponse
 from django.shortcuts import render
 from django.urls import reverse
 from django.templatetags.static import static
+from django.contrib import messages
 
 import csv
 from django.contrib.staticfiles import finders
 
 from .models import User
-from catalogue.models import ProductSeries, ProductType, Category
+from catalogue.models import ProductSeries, ProductType, Category, Dealer
 
 #home page
 def index(request):
@@ -127,21 +129,22 @@ def createUser(request):
             password = request.POST["password"]
             confirmation = request.POST["confirmation"]
             if password != confirmation:
-                return render(request, "main/createuser.html", {
-                    "message": "The passwords must match."
-                })
+                messages.error(request, "Passwords must match.")
+                return render(request, "main/createuser.html")
 
             #attempt to create new user
-            try:
-                user = User.objects.create_user(username, email, password)
-                user.save()
-            except IntegrityError:
-                return render(request, "main/createuser.html", {
-                    "message": "Username already taken."
-                })
-            return render(request, "main/createuser.html", {
-                    "message": "User created successfully. Check the Admin Panel to verify."
-                })
+            if len(username) < 1 or len(email) < 1 or len(password) < 1 or len(confirmation) < 1:
+                messages.error(request, "All fields required.")
+                return render(request, "main/createuser.html")
+            else:
+                try:
+                    user = User.objects.create_user(username, email, password)
+                    user.save()
+                except IntegrityError:
+                    messages.error(request, "Username has already been taken.")
+                    return render(request, "main/createuser.html")
+            messages.info(request, "User created successfully.")
+            return render(request, "main/createuser.html")
 
         else:
             return render(request, "main/createuser.html")
@@ -163,9 +166,8 @@ def loginPage(request):
             login(request, user)
             return HttpResponseRedirect(reverse("index"))
         else:
-            return render(request, "main/login.html", {
-                "message": "Invalid username and/or password."
-            })
+            messages.error(request, "Invalid username and/or password.")
+            return render(request, "main/login.html")
     else:
         return render(request, "main/login.html")
 
@@ -182,19 +184,16 @@ def changePassword(request):
             if newPassword == confirmation: #set new password
                 request.user.set_password(newPassword)
                 request.user.save()
-                return render(request, "main/changepassword.html", {
-                    "message": "Password changed successfully."
-                })
+                messages.info(request, "Password changed successfully.")
+                return render(request, "main/changepassword.html")
 
             else:
-                return render(request, "main/changepassword.html", {
-                    "message": "Confirmation did not match your new password. Please try again."
-                })
+                messages.error(request, "Confirmation did not match your new password. Please try again.")
+                return render(request, "main/changepassword.html")
         
         else: #password incorrect
-            return render(request, "main/changepassword.html", {
-                "message": "Password incorrect. Please try again."
-            })
+            messages.error(request, "Password incorrect. Please try again.")
+            return render(request, "main/changepassword.html")
     
     else:
         return render(request, "main/changepassword.html")
@@ -202,12 +201,22 @@ def changePassword(request):
 #logout
 def logoutPage(request):
     logout(request)
+    messages.info(request, "You have been logged out successfully.")
     return HttpResponseRedirect(reverse("index"))
 
 #aunex dealer locator iframe
 @xframe_options_exempt
 def aunexdealerlocator(request):
-    return render(request, "main/aunexdealerlocator.html")
+    dealers = Dealer.objects.all()
+    if dealers:
+        coordinates = []
+        for dealer in dealers:
+            coordinate = f'{dealer.latitude}/{dealer.longitude}'
+            coordinates.append(coordinate)
+        context = {
+            "coordinates": coordinates,
+        }
+    return render(request, "main/aunexdealerlocator.html", context)
 
 #return dealer locations
 def dealerLocations(request):
@@ -224,16 +233,31 @@ def dealerLocations(request):
 #returns 2D array of first and second column
 def locationstoArray() -> dict:
     results = {}
-    f = open(finders.find('main/locations.csv'))
-    reader = csv.reader(f)
     a = []
     b = []
-    for row in reader:
-        a.append(row[0])
-        b.append(row[1])
+    c = []
+    d = []
+    e = []
+    dealers = Dealer.objects.all()
+    if dealers:
+        for dealer in dealers:
+            locations = f'{dealer.name}'
+            address = f'{dealer.address} {dealer.city} {dealer.state} {dealer.zipcode}'
+            phone = f'{dealer.telephone}'
+            a.append(locations)
+            b.append(address)
+            if 'Musway' in f'{dealer.brand}':
+                musway = f'{dealer.name}'
+                c.append(musway)
+            if 'Elite' in f'{dealer.elite}':
+                elite = f'{dealer.name}'
+                d.append(elite)
+            e.append(phone)
     results["locations"] = a
     results["addresses"] = b
-    f.close()
+    results["musway"] = c
+    results["elite"] = d
+    results["phone"] = e
     return results
 
 #returns product series for a specific category

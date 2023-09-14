@@ -1,0 +1,54 @@
+{% extends "main/layout.html" %}
+
+{% load static %}
+
+{% block title %}Aunex Staff{% endblock %}
+
+{% block body %}
+
+<div class="container">
+
+    <h1 class="display-4 text-center my-5">Documents</h1>
+
+    <div class="row d-flex justify-content-center">
+        <div class="col-6 col-lg-3">
+            <h6 class="text-center">Product Specifications</h6>
+            <ul>
+                {% for product in products %}
+                {% if product.specSheet %}
+                <li><a href="{{ product.specSheet.image.url }}" target="_blank">{{ product.name }}</a></li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-6 col-lg-3">
+            <h6 class="text-center">Product Manuals</h6>
+            <ul>
+                {% for product in products %}
+                {% if product.file %}
+                <li><a href="{{ product.file.file.url }}" target="_blank">{{ product.name }}</a></li>
+                {% endif %}
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="col-12 col-lg-3">
+            <h6 class="text-center">New Dealer Forms</h6>
+            <ul>
+                {% for doc in docs %}
+                <li>
+                    <a href="{{ doc.file.url }}" target="_blank">
+                        {% if doc.name %}
+                        {{ doc.name }}
+                        {% else %}
+                        {{ doc.file.name }}
+                        {% endif %}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

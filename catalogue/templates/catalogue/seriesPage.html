@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Aunex Staff{% endblock %}
+{% block title %}Aunex{% endblock %}
 
 {% block body %}
 
@@ -11,7 +11,7 @@
 </ul>
 <div class="carousel-inner">
     <div class="carousel-item active">
-        <img src= {{ series.banner.image.url }}>
+        <img src= "{{ series.banner.image.url }}">
         <div class="carousel-caption">
             <h1 class="display-2"></h1>
             <h3></h3>
@@ -22,13 +22,13 @@
 
 <!--- Jumbotron -->
 <!-----FAB--->
-  <a href="{% url 'index' %}">
-<div class="fab-container">
-   <div class="fab-icon-holder">
-       <i class="fas fa-home"></i>
-   </a>
-</div>
-</div>
+<a href="{% url 'index' %}">
+    <div class="fab-container">
+        <div class="fab-icon-holder">
+            <i class="fas fa-home"></i>
+        </div>
+    </div>
+</a>
 
 
 <!--- Welcome Section -->
@@ -39,7 +39,10 @@
        </div>
        <hr>
        <div class="col-12">
-           <p class="lead">{{ series.summary }}</p>
+        {% if 'Accessories' in series.name %}
+        {% else %}
+            <p class="lead">{{ series.summary }}</p>
+        {% endif %}
    </div>
 </div>
 </div>
@@ -50,19 +53,35 @@
 
     <div class="row text-center padding">
 
-        {% for product in series.products.all %}
+        {% if 'Accessories' in series.name %}
+        {% for product in series.products.all|dictsort:'page_position' %}
             <div class="col-xs-12 col-sm-6 col-md-4">
                 {% if product.gallery.all.count <= 0 %}
                     <a>
                 {% else %}
-                    <a href= {% url 'product' product.name %}>
+                    <a href="{% url 'product' product.name %}">
                 {% endif %}
-                    <img src={{ product.image.image.url }} class="img-fluid image1"> 
+                    <img src="{{ product.image.image.url }}" class="img-fluid image1"> 
                 </a>
                 <h3>{{ product.name }}</h3>
                 <p></p>
             </div>
         {% endfor %}
+        {% else %}
+        {% for product in series.products.all|dictsort:'page_position' %}
+            <div class="col-xs-12 col-sm-6 col-md-4">
+                {% if product.gallery.all.count <= 0 %}
+                    <a>
+                {% else %}
+                    <a href="{% url 'product' product.name %}">
+                {% endif %}
+                    <img src="{{ product.image.image.url }}" class="img-fluid image1"> 
+                </a>
+                <h3>{{ product.name }}</h3>
+                <p></p>
+            </div>
+        {% endfor %}
+        {% endif %}
     
    
         <div class="col-12">
@@ -77,7 +96,7 @@
 
 {% if series.infoImage %}
 <div class="container-fluid padding">
-    <img src={{ series.infoImage.image.url }} alt="centered image" class="img-fluid img-2 img-align-center">
+    <img src="{{ series.infoImage.image.url }}" alt="centered image" class="img-fluid img-2 img-align-center">
     <div class="carousel-caption">
         <h1 class="display-2"></h1>
         <h3></h3>
