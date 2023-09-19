@@ -35,7 +35,7 @@ EMAIL_ORDER_RECIPIENTS = ['vincenttpham@gmail.com']
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['www.aunexusa.com', 'aunexusa.com', 'localhost']
+ALLOWED_HOSTS = ['www.aunexusa.com', 'aunexusa.com', 'localhost', 'iirqwj2lhk.execute-api.us-east-1.amazonaws.com']
 
 
 # Application definition
@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'catalogue',
     'main',
+    'django_s3_storage',
 ]
 
 MIDDLEWARE = [
@@ -129,7 +130,32 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+
+
+# Static files for AWS Lambda (django-s3-storage)
+
+YOUR_S3_BUCKET = 'aunex-static'
+
+STATICFILES_STORAGE = 'django_s3_storage.storage.StaticS3Storage'
+AWS_S3_BUCKET_NAME_STATIC = YOUR_S3_BUCKET
+
+# These next two lines will serve the static files directly 
+# from the s3 bucket
+AWS_S3_CUSTOM_DOMAIN = f'{YOUR_S3_BUCKET}.s3.amazonaws.com'
+
+STATIC_LOCATION = 'static'
+STATIC_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/'
+
+# OR...if you create a fancy custom domain for your static files use:
+#AWS_S3_PUBLIC_URL_STATIC = "https://static.zappaguide.com/"
+
+MEDIA_LOCATION = 'media'
+MEDIA_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/{MEDIA_LOCATION}/'
+
+AWS_DEFAULT_ACL = None
